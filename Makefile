@@ -1,8 +1,11 @@
+include .env
+export
+
 run:
-	mv .htaccess.example .htaccess
+	sudo rm -rf database/
 	docker compose down --remove-orphans
 	docker-compose up -d --build
-	docker exec -ti wordpress '/prep.sh'
+	docker exec -ti $${PROJECT_NAME}-wordpress '/prep.sh'
 
 stop:
 	docker-compose down --remove-orphans
@@ -13,7 +16,7 @@ remove:
 	rm -rf site/*
 
 ssh-sql:
-	docker exec -ti db bash
+	docker exec -ti $${PROJECT_NAME}-mysql bash
 
 ssh:
-	docker exec -ti wordpress bash
+	docker exec -ti $${PROJECT_NAME}-wordpress bash
